@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ChessAssist</string>
+    <string name="need_overlay_perm">Draw-over-apps permission required. Tap again after granting.</string>
+    <string name="need_notif_perm">Notification permission required. Tap again after granting.</string>
+    <string name="need_calibration">Please calibrate the board region first.</string>
+    <string name="requesting_projection">Requesting screen capture…</string>
+    <string name="projection_denied">Screen capture denied. Cannot read board.</string>
+    <string name="service_running">ChessAssist overlay running</string>
+    <string name="service_stopped">Overlay stopped.</string>
+    <string name="stop">Stop</string>
+    <string name="calibration_hint">Drag to select the chess board region, then tap Save.</string>
+    <string name="calibration_saved">Board region saved!</string>
+    <string name="calibration_no_selection">Select a region first.</string>
+</resources>
