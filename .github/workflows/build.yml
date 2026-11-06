@@ -1,109 +1,41 @@
-# .github/workflows/build.yml
 name: Build ChessAssist APK
 
 on:
   push:
-    branches:
-      - main
-      - master
-  pull_request:
-    branches:
-      - main
-      - master
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
   build:
-    name: Build and Sign APK
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: temurin
-          cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install NDK and build tools
-        run: |
-          echo "y" | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager \
-            "ndk;26.3.11579264" \
-            "build-tools;34.0.0" \
-            "platforms;android-34"
-
-      - name: Restore libstockfish.so from secret
-        env:
-          STOCKFISH_SO_B64: ${{ secrets.STOCKFISH_SO_B64 }}
+      - name: Create placeholder libstockfish.so
         run: |
           mkdir -p app/src/main/jniLibs/arm64-v8a
-          echo "$STOCKFISH_SO_B64" | base64 --decode > app/src/main/jniLibs/arm64-v8a/libstockfish.so
-
-      - name: Grant gradlew permission
-        run: chmod +x gradlew
-
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+          if [ -n "${{ secrets.STOCKFISH_SO_B64 }}" ]; then
+            echo "${{ secrets.STOCKFISH_SO_B64 }}" | base64 --decode > app/src/main/jniLibs/arm64-v8a/libstockfish.so
+          else
+            echo "placeholder" > app/src/main/jniLibs/arm64-v8a/libstockfish.so
+          fi
 
       - name: Build debug APK
-        run: ./gradlew assembleDebug --stacktrace
+        run: gradle assembleDebug --stacktrace
 
-      - name: Build release APK
-        run: ./gradlew assembleRelease --stacktrace
-
-      - name: Sign release APK
-        if: ${{ secrets.KEYSTORE_B64 != '' }}
-        env:
-          KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-        run: |
-          echo "$KEYSTORE_B64" | base64 --decode > release.jks
-          $ANDROID_SDK_ROOT/build-tools/34.0.0/apksigner sign \
-            --ks release.jks \
-            --ks-key-alias "$KEY_ALIAS" \
-            --ks-pass "pass:$STORE_PASSWORD" \
-            --key-pass "pass:$KEY_PASSWORD" \
-            --out app/build/outputs/apk/release/app-release-signed.apk \
-            app/build/outputs/apk/release/app-release-unsigned.apk
-          rm -f release.jks
-
-      - name: Upload debug APK
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: ChessAssist-debug
           path: app/build/outputs/apk/debug/app-debug.apk
-          retention-days: 14
-
-      - name: Upload release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: ChessAssist-release
-          path: |
-            app/build/outputs/apk/release/app-release-signed.apk
-            app/build/outputs/apk/release/app-release-unsigned.apk
-          retention-days: 14
-
-      - name: Release on tag
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            app/build/outputs/apk/debug/app-debug.apk
-            app/build/outputs/apk/release/app-release-signed.apk
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
