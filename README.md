@@ -91,4 +91,4 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 Chess.com prohibits computer assistance in rated games, live games, and tournaments.
 Use this tool only in: unrated casual games, games vs bots, analysis mode,
 or your own test harness. Violation of Chess.com's Fair Play Policy can result
-in account closure. This tool is for educational and research purposes.
+in account closure. This tool is for educational and research purposes
