@@ -19,10 +19,10 @@ jobs:
           distribution: temurin
           cache: gradle
 
-      - name: Accept Android SDK licenses
+      - name: Accept SDK licenses and install packages
         run: |
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager \
+          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses || true
+          $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager \
             "platforms;android-34" \
             "build-tools;34.0.0" \
             "ndk;26.3.11579264"
@@ -34,7 +34,7 @@ jobs:
             echo "${{ secrets.STOCKFISH_SO_B64 }}" | base64 --decode \
               > app/src/main/jniLibs/arm64-v8a/libstockfish.so
           else
-            dd if=/dev/zero bs=1 count=4 2>/dev/null \
+            dd if=/dev/zero bs=4 count=1 2>/dev/null \
               > app/src/main/jniLibs/arm64-v8a/libstockfish.so
           fi
 
@@ -57,7 +57,7 @@ jobs:
       - name: Build debug APK
         run: ./gradlew assembleDebug --stacktrace
         env:
-          ANDROID_HOME: ${{ env.ANDROID_HOME }}
+          ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
