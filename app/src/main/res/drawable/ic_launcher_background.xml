@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Dark base -->
+    <rect
+        android:fillColor="#1A1A2E"
+        android:left="0"
+        android:top="0"
+        android:right="108"
+        android:bottom="108" />
+
+    <!-- Chessboard grid — 4x4 of alternating squares, subtle -->
+    <!-- Row 0 -->
+    <rect android:fillColor="#252540" android:left="0" android:top="0" android:right="27" android:bottom="27" />
+    <rect android:fillColor="#1A1A2E" android:left="27" android:top="0" android:right="54" android:bottom="27" />
+    <rect android:fillColor="#252540" android:left="54" android:top="0" android:right="81" android:bottom="27" />
+    <rect android:fillColor="#1A1A2E" android:left="81" android:top="0" android:right="108" android:bottom="27" />
+    <!-- Row 1 -->
+    <rect android:fillColor="#1A1A2E" android:left="0" android:top="27" android:right="27" android:bottom="54" />
+    <rect android:fillColor="#252540" android:left="27" android:top="27" android:right="54" android:bottom="54" />
+    <rect android:fillColor="#1A1A2E" android:left="54" android:top="27" android:right="81" android:bottom="54" />
+    <rect android:fillColor="#252540" android:left="81" android:top="27" android:right="108" android:bottom="54" />
+    <!-- Row 2 -->
+    <rect android:fillColor="#252540" android:left="0" android:top="54" android:right="27" android:bottom="81" />
+    <rect android:fillColor="#1A1A2E" android:left="27" android:top="54" android:right="54" android:bottom="81" />
+    <rect android:fillColor="#252540" android:left="54" android:top="54" android:right="81" android:bottom="81" />
+    <rect android:fillColor="#1A1A2E" android:left="81" android:top="54" android:right="108" android:bottom="81" />
+    <!-- Row 3 -->
+    <rect android:fillColor="#1A1A2E" android:left="0" android:top="81" android:right="27" android:bottom="108" />
+    <rect android:fillColor="#252540" android:left="27" android:top="81" android:right="54" android:bottom="108" />
+    <rect android:fillColor="#1A1A2E" android:left="54" android:top="81" android:right="81" android:bottom="108" />
+    <rect android:fillColor="#252540" android:left="81" android:top="81" android:right="108" android:bottom="108" />
+
+</vector>
