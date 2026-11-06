@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:background="#1A1A2E">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="♟ ChessAssist"
+        android:textSize="28sp"
+        android:textColor="#FFD700"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ready."
+        android:textColor="#AAAAAA"
+        android:textSize="13sp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center" />
+
+    <Button
+        android:id="@+id/calibrateBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1. Calibrate Board Region"
+        android:backgroundTint="#2A2A4A"
+        android:textColor="#FFD700"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/startBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2. Start Overlay"
+        android:backgroundTint="#1A6B1A"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/stopBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stop Overlay"
+        android:backgroundTint="#6B1A1A"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>
